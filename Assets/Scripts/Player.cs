@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float thrustSpeed = 1f;
     private Vector2 turnDirection = Vector2.zero;
     public float rotationSpeed = 1f;
+    private bool isActive = true;
 
     public Bullet bulletPrefab;
 
@@ -25,7 +26,7 @@ public class Player : MonoBehaviour
         controls.PlayerActions.Turn.performed += ctx => turnDirection = ctx.ReadValue<Vector2>();
         controls.PlayerActions.Turn.canceled += ctx => turnDirection = Vector2.zero;
 
-        controls.PlayerActions.Shoot.started += ctx => Shoot();
+        //controls.PlayerActions.Shoot.started += ctx => Shoot();
         controls.PlayerActions.Shoot.performed += ctx => ShootRepeatedly();
         controls.PlayerActions.Shoot.canceled += ctx => CancelShoot();
     }
@@ -53,7 +54,9 @@ public class Player : MonoBehaviour
 
     private void ShootRepeatedly()
     {
-        InvokeRepeating("Shoot", 0f, 0.2f);
+        if (!isActive || !IsInvoking("Shoot")) {
+            InvokeRepeating("Shoot", 0f, 0.2f);
+        }
     }
 
     private void CancelShoot()

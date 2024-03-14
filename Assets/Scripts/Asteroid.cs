@@ -43,6 +43,7 @@ public class Asteroid : MonoBehaviour
             if ((size * 0.5f) >= minSize)
             {
                 CreateSplit();
+                CreateSplit();
             }
 
             Destroy(gameObject);
@@ -54,7 +55,7 @@ public class Asteroid : MonoBehaviour
         Vector2 position = transform.position;
         position += Random.insideUnitCircle * 0.5f;
 
-        Asteroid half = Instantiate(this, position, transform.rotation);
+        Asteroid half = Instantiate(gameObject, position, transform.rotation).GetComponent<Asteroid>();
         half.size = size * 0.5f;
         half.SetTrajectory(Random.insideUnitCircle.normalized * speed);
     }
