@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float thrustSpeed = 1f;
     private Vector2 turnDirection = Vector2.zero;
     public float rotationSpeed = 1f;
-    private bool isActive = true;
+    public bool isActive = true;
 
     public Bullet bulletPrefab;
 
@@ -72,6 +72,7 @@ public class Player : MonoBehaviour
             rb.angularVelocity = 0;
 
             gameObject.SetActive(false);
+            isActive = false;
 
             FindObjectOfType<GameManager>().PlayerDied();
         }

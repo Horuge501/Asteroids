@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,16 +11,25 @@ public class GameManager : MonoBehaviour
     public float invecibleTime = 3;
     public int lives = 3;
     public int score = 0;
+    [SerializeField] private TextMeshProUGUI playerScore;
+    [SerializeField] private TextMeshProUGUI playerLives;
 
     public void AsteroidDestroyed(Asteroid asteroid)
     {
         if (asteroid.size < 0.75f)
         {
             score += 100;
+            playerScore.text = "Score = " + score.ToString();
         }
         else if (asteroid.size < 1.25f)
         {
             score += 50;
+            playerScore.text = "Score = " + score.ToString();
+        }
+        else
+        {
+            score += 25;
+            playerScore.text = "Score = " + score.ToString();
         }
     }
 
@@ -29,10 +40,12 @@ public class GameManager : MonoBehaviour
         if (lives <= 0)
         {
             GameOver();
+            playerLives.text = "Lives x" + lives.ToString();
         }
         else
         {
             Invoke("Respawn", respawnTime);
+            playerLives.text = "Lives x" + lives.ToString();
         }
     }
 
@@ -52,7 +65,11 @@ public class GameManager : MonoBehaviour
     private void GameOver()
     {
         lives = 3;
+        playerLives.text = "Lives x" + lives.ToString();
         score = 0;
+        playerScore.text = "Score =" + score.ToString();
+
+        player.isActive = true;
 
         Invoke("Respawn", respawnTime);
     }
